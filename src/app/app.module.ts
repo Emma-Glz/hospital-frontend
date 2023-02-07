@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PatientComponent } from './pages/patient/patient.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MaterialModule } from './material/material.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule//permite el consumo de http de todo el proyecto
+    HttpClientModule,//permite el consumo de http de todo el proyecto
+    MaterialModule
 
   ],
   providers: [],
