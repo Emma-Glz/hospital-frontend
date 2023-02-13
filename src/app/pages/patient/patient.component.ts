@@ -20,6 +20,12 @@ export class PatientComponent implements OnInit {
   displayedColumns: String[] = ['id','firstName','lastName','dni','actions'];
 
   ngOnInit(): void {
+    this.patientService.patientChange.subscribe(data =>{
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+
    this.patientService.findAll().subscribe(data => {
     //console.log(data);
     this.dataSource = new MatTableDataSource(data);
@@ -30,7 +36,6 @@ export class PatientComponent implements OnInit {
    });
   }
   applyFilter(event: any){
-    console.log(event);
     this.dataSource.filter = event.target.value.trim();
   }
 

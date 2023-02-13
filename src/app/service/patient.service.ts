@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient} from '@angular/common/http';
 import { Patient } from '../Model/patient';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,8 @@ export class PatientService {
 
   //private url: string  = environment.HOST + '/patients';
   private url: string  = `${environment.HOST}/patients`;
+  //VARIABLE QUE SIRVE PARA ALMACENAR LOS CAMBIOS
+  public patientChange = new Subject<Patient[]>;
 
   constructor(private http: HttpClient) { }
 
@@ -17,8 +20,8 @@ export class PatientService {
     return this.http.get<Patient[]>(this.url);
   }
 
-  findById(id: string){
-    return this.http.get(`${this.url}/${id}`);
+  findById(id: number){
+    return this.http.get<Patient>(`${this.url}/${id}`);
   }
 
   save(patient: Patient){
@@ -26,9 +29,9 @@ export class PatientService {
   }
 
   update(patient: Patient){
-    return this.http.put(this.url,patient);
+    return this.http.put(`${this.url}/${patient.idPatient}`,patient);
   }
   delete(id: number){
-    return this.http.delete(`${this.url}/${id}`)
+    return this.http.delete(`${this.url}/${id}`);
   }
 }
