@@ -22,7 +22,7 @@ export class PatientComponent implements OnInit {
   displayedColumns: String[] = ['id','firstName','lastName','dni','actions'];
 
   ngOnInit(): void {
-    this.patientService.patientChange.subscribe(data =>{
+    this.patientService.getPatientChange().subscribe(data =>{
       this.createTable(data);
     });
 

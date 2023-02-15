@@ -12,7 +12,8 @@ export class PatientService {
   //private url: string  = environment.HOST + '/patients';
   private url: string  = `${environment.HOST}/patients`;
   //VARIABLE QUE SIRVE PARA ALMACENAR LOS CAMBIOS
-  public patientChange = new Subject<Patient[]>;
+  ///////////changing method to private
+  private patientChange = new Subject<Patient[]>;
 
   constructor(private http: HttpClient) { }
 
@@ -34,4 +35,14 @@ export class PatientService {
   delete(id: number){
     return this.http.delete(`${this.url}/${id}`);
   }
+
+  public getPatientChange(){
+    return this.patientChange.asObservable();
+  }
+  ////////////implement these change ////////////////////
+
+  public setPatientChange(data: Patient[]){
+    this.patientChange.next(data);
+  }
+
 }

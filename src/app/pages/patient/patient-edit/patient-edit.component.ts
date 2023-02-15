@@ -72,7 +72,7 @@ export class PatientEditComponent implements OnInit {
     this.service.update(patient).subscribe(data => {
       this.service.findAll().subscribe(data => {
         //NEXT GUARDA LA DATA EN LA VARIABLE
-        this.service.patientChange.next(data);
+        this.service.setPatientChange(data);
       })
     });
 
@@ -82,7 +82,7 @@ export class PatientEditComponent implements OnInit {
       return this.service.findAll();
     })
     ).subscribe(data => {
-      return this.service.patientChange.next(data);
+      return this.service.setPatientChange(data);
     })
     }
 
