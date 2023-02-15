@@ -85,6 +85,7 @@ export class PatientEditComponent implements OnInit {
       return this.service.patientChange.next(data);
     })
     }
+
     this.router.navigate(['/pages/patient']);
   }
 }
