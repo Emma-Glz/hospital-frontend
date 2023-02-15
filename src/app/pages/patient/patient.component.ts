@@ -12,7 +12,9 @@ import { MatSort } from '@angular/material/sort';
 })
 export class PatientComponent implements OnInit {
 
-  constructor(private patientService: PatientService){}
+  constructor(
+    private patientService: PatientService
+    ){}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -21,23 +23,23 @@ export class PatientComponent implements OnInit {
 
   ngOnInit(): void {
     this.patientService.patientChange.subscribe(data =>{
-      this.dataSource = new MatTableDataSource(data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.createTable(data);
     });
 
    this.patientService.findAll().subscribe(data => {
     //console.log(data);
-    this.dataSource = new MatTableDataSource(data);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-
+    this.createTable(data);
 
    });
   }
   applyFilter(event: any){
-    this.dataSource.filter = event.target.value.trim();
+    this.dataSource.filter = event.target.value.trim();//trim elimina los espacios al inicio y final
   }
+  createTable(data:Patient[]){
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
 
+  }
 
 }

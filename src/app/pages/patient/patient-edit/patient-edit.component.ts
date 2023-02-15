@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PatientService } from '../../../service/patient.service';
 import { Patient } from '../../../Model/patient';
+import { switchMap } from 'rxjs';
 @Component({
   selector: 'app-patient-edit',
   templateUrl: './patient-edit.component.html',
@@ -16,7 +17,8 @@ export class PatientEditComponent implements OnInit {
 
   constructor(
     private service: PatientService,
-    private activedRoute: ActivatedRoute//nos sirve para ver como se encuentra la url
+    private activedRoute: ActivatedRoute,//nos sirve para ver como se encuentra la url
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -29,11 +31,11 @@ export class PatientEditComponent implements OnInit {
       phone: new FormControl(''),
       email: new FormControl('')
     });
-
     this.activedRoute.params.subscribe(data=>{
       this.id = data['id'];
       this.isEdit = data['id'] != null;
       this.initForm();
+
     });
 
   }
@@ -76,7 +78,13 @@ export class PatientEditComponent implements OnInit {
 
     }else{
       //CREATE
-    this.service.save(patient).subscribe();
+    this.service.save(patient).pipe(switchMap(() =>{
+      return this.service.findAll();
+    })
+    ).subscribe(data => {
+      return this.service.patientChange.next(data);
+    })
     }
+    this.router.navigate(['/pages/patient']);
   }
 }
