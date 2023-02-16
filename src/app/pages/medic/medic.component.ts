@@ -5,8 +5,9 @@ import { MedicService } from '../../service/medic.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PatientService } from '../../service/patient.service';
 import { switchMap } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { MedicDialogComponent } from './medic-dialog/medic-dialog.component';
 
 @Component({
   selector: 'app-medic',
@@ -23,7 +24,8 @@ export class MedicComponent implements OnInit {
 
   constructor(
     private medicService: MedicService,
-    private _SnackBar: MatSnackBar
+    private _SnackBar: MatSnackBar,
+    private _dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +57,12 @@ export class MedicComponent implements OnInit {
 
 
   openDialog(medic?: Medic) {//?:sirve para indicar que este metodo puede enviarse con o sin parametros
+    this._dialog.open(MedicDialogComponent,{
+      width: '250px',
+      data: medic,
+      disableClose: true
 
+    })
   }
 
 
@@ -63,10 +70,10 @@ export class MedicComponent implements OnInit {
     this.medicService.delete(id).pipe(switchMap(() => {
       return this.medicService.findAll();
     }))
-    .subscribe(data=>{
-      this.medicService.setMedicChange(data);
-      this.medicService.setMessageChange("DELETED!");
-    })
+      .subscribe(data => {
+        this.medicService.setMedicChange(data);
+        this.medicService.setMessageChange("DELETED!");
+      })
   }
 
 

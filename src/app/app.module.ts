@@ -9,13 +9,15 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MedicComponent } from './pages/medic/medic.component';
 import { PatientEditComponent } from './pages/patient/patient-edit/patient-edit.component';
 import { MaterialModule } from './material/material.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MedicDialogComponent } from './pages/medic/medic-dialog/medic-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
     PatientComponent,
     MedicComponent,
-    PatientEditComponent
+    PatientEditComponent,
+    MedicDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -23,8 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     HttpClientModule,//permite el consumo de http de todo el proyecto
     MaterialModule,
-    ReactiveFormsModule//activar para el form de patient-edit
-
+    ReactiveFormsModule,//activar para el form de patient-edit
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
