@@ -73,6 +73,7 @@ export class PatientEditComponent implements OnInit {
       this.service.findAll().subscribe(data => {
         //NEXT GUARDA LA DATA EN LA VARIABLE
         this.service.setPatientChange(data);
+        this.service.setMessageChange("UPDATED!");
       })
     });
 
@@ -82,10 +83,13 @@ export class PatientEditComponent implements OnInit {
       return this.service.findAll();
     })
     ).subscribe(data => {
-      return this.service.setPatientChange(data);
+      this.service.setPatientChange(data);
+      this.service.setMessageChange("CREATED!");
+
     })
     }
 
     this.router.navigate(['/pages/patient']);
+
   }
 }

@@ -14,6 +14,7 @@ export class PatientService {
   //VARIABLE QUE SIRVE PARA ALMACENAR LOS CAMBIOS
   ///////////changing method to private
   private patientChange = new Subject<Patient[]>;
+  private messageChange = new Subject<string>;
 
   constructor(private http: HttpClient) { }
 
@@ -35,14 +36,22 @@ export class PatientService {
   delete(id: number){
     return this.http.delete(`${this.url}/${id}`);
   }
+  ////////////implement these change ////////////////////
 
   public getPatientChange(){
     return this.patientChange.asObservable();
   }
-  ////////////implement these change ////////////////////
 
   public setPatientChange(data: Patient[]){
     this.patientChange.next(data);
+  }
+
+  public getMessageChange(){
+    return this.messageChange.asObservable();
+  }
+
+  public setMessageChange(data: string){
+    this.messageChange.next(data);
   }
 
 }

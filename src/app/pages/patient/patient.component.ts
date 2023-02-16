@@ -4,6 +4,8 @@ import { Patient } from '../../Model/patient';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { switchMap } from 'rxjs';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-patient',
@@ -12,8 +14,12 @@ import { MatSort } from '@angular/material/sort';
 })
 export class PatientComponent implements OnInit {
 
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   constructor(
-    private patientService: PatientService
+    private patientService: PatientService,
+    private _SnackBar: MatSnackBar
     ){}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -22,8 +28,16 @@ export class PatientComponent implements OnInit {
   displayedColumns: String[] = ['id','firstName','lastName','dni','actions'];
 
   ngOnInit(): void {
+    //con estas lines reaccionamos
     this.patientService.getPatientChange().subscribe(data =>{
       this.createTable(data);
+    });
+
+    this.patientService.getMessageChange().subscribe(data =>{
+        this._SnackBar.open(data,"INFO",{
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration:2000});
     });
 
    this.patientService.findAll().subscribe(data => {
@@ -40,6 +54,17 @@ export class PatientComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
+  }
+  delete(id: number){
+    this.patientService.delete(id).pipe(switchMap(() => {
+      return this.patientService.findAll()
+    }))
+    .subscribe(data => {
+      //this.createTable(data);
+      //internamente se esta hacinedo un .NEXT para gurdar la data en esa variable reactiva.
+      this.patientService.setPatientChange(data);
+      this.patientService.setMessageChange("DELETED!");
+    })
   }
 
 }
