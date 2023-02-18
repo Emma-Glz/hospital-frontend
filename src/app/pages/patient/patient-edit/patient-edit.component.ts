@@ -69,7 +69,7 @@ export class PatientEditComponent implements OnInit {
 
     if(this.isEdit){
     //UPDATE
-    this.service.update(patient).subscribe(data => {
+    this.service.update(patient,patient.idPatient).subscribe(data => {
       this.service.findAll().subscribe(data => {
         //NEXT GUARDA LA DATA EN LA VARIABLE
         this.service.setPatientChange(data);

@@ -3,22 +3,25 @@ import { environment } from '../../environments/environment';
 import { HttpClient} from '@angular/common/http';
 import { Patient } from '../Model/patient';
 import { Subject } from 'rxjs';
+import { GenericService } from './generic.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PatientService {
+export class PatientService extends GenericService<Patient> {
 
   //private url: string  = environment.HOST + '/patients';
-  private url: string  = `${environment.HOST}/patients`;
+  //private url: string  = `${environment.HOST}/patients`;
   //VARIABLE QUE SIRVE PARA ALMACENAR LOS CAMBIOS
   ///////////changing method to private
   private patientChange = new Subject<Patient[]>;
   private messageChange = new Subject<string>;
 
-  constructor(private http: HttpClient) { }
+  constructor(protected override http: HttpClient) {
+    super(http, `${environment.HOST}/patients`);
+  }
 
-  findAll(){
+ /* findAll(){
     return this.http.get<Patient[]>(this.url);
   }
 
@@ -35,7 +38,7 @@ export class PatientService {
   }
   delete(id: number){
     return this.http.delete(`${this.url}/${id}`);
-  }
+  }*/
   ////////////implement these change ////////////////////
 
   public getPatientChange(){

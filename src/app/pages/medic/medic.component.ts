@@ -58,7 +58,7 @@ export class MedicComponent implements OnInit {
 
   openDialog(medic?: Medic) {//?:sirve para indicar que este metodo puede enviarse con o sin parametros
     this._dialog.open(MedicDialogComponent,{
-      width: '250px',
+      width: '280px',
       data: medic,
       disableClose: true
 
