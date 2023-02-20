@@ -11,13 +11,15 @@ import { PatientEditComponent } from './pages/patient/patient-edit/patient-edit.
 import { MaterialModule } from './material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MedicDialogComponent } from './pages/medic/medic-dialog/medic-dialog.component';
+import { DialogConfirmationComponent } from './pages/medic/medic-dialog/dialog-confirmation/dialog-confirmation.component';
 @NgModule({
   declarations: [
     AppComponent,
     PatientComponent,
     MedicComponent,
     PatientEditComponent,
-    MedicDialogComponent
+    MedicDialogComponent,
+    DialogConfirmationComponent
   ],
   imports: [
     BrowserModule,

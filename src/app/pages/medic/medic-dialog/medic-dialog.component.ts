@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Medic } from 'src/app/Model/medic';
 import { MedicService } from '../../../service/medic.service';
 import { switchMap } from 'rxjs';
+import { DialogConfirmationComponent } from './dialog-confirmation/dialog-confirmation.component';
 
 @Component({
   selector: 'app-medic-dialog',
@@ -11,11 +12,12 @@ import { switchMap } from 'rxjs';
 })
 export class MedicDialogComponent implements OnInit {
   medic: Medic;
-
+  result: string;
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: Medic,
     private _dialogRef: MatDialogRef<MedicDialogComponent>,
-    private medicService: MedicService
+    private medicService: MedicService,
+    private _dialogConfirmation: MatDialog
   ){}
 
   ngOnInit(): void {
@@ -29,28 +31,26 @@ export class MedicDialogComponent implements OnInit {
 
   }
   sendData(){
-    if(this.medic != null && this.medic.idMedic > 0){
-      //UPDATE
-      this.medicService.update(this.medic,this.medic.idMedic)
-      .pipe(
-        switchMap(()=> this.medicService.findAll()
-      ))
-      .subscribe(data =>{
-        this.medicService.setMedicChange(data);
-        this.medicService.setMessageChange("UPDATED!");
-      })
-    }else{
-      //CREATE
-      this.medicService.save(this.medic)
-      .pipe(
-        switchMap(()=> this.medicService.findAll()
-        ))
+    const dialogRef = this._dialogConfirmation.open(DialogConfirmationComponent,{
+      disableClose: true,
+      data: this.medic
+    })
+    dialogRef.afterClosed().subscribe(result =>{
+      //console.log(result);
+      if(result){
+        //update table
+        this.medicService.update(this.medic,this.medic.idMedic).pipe(switchMap(() =>{
+          return this.medicService.findAll();
+        }))
         .subscribe(data =>{
           this.medicService.setMedicChange(data);
-          this.medicService.setMessageChange("CREATED!");
-      })
-    }
-    this._dialogRef.close();
+          //close dialog1
+          this._dialogRef.close();
+          this.medicService.setMessageChange("UPDATED!");
+        })
+
+      }
+    })
 
   }
   close(){
