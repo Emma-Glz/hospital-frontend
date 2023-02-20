@@ -12,6 +12,8 @@ import { MaterialModule } from './material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MedicDialogComponent } from './pages/medic/medic-dialog/medic-dialog.component';
 import { DialogConfirmationComponent } from './pages/medic/medic-dialog/dialog-confirmation/dialog-confirmation.component';
+import { ExamComponent } from './pages/exam/exam.component';
+import { SpecialtyComponent } from './pages/specialty/specialty.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +21,9 @@ import { DialogConfirmationComponent } from './pages/medic/medic-dialog/dialog-c
     MedicComponent,
     PatientEditComponent,
     MedicDialogComponent,
-    DialogConfirmationComponent
+    DialogConfirmationComponent,
+    ExamComponent,
+    SpecialtyComponent
   ],
   imports: [
     BrowserModule,
