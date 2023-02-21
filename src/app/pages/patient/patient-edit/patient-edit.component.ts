@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PatientService } from '../../../service/patient.service';
 import { Patient } from '../../../Model/patient';
@@ -24,12 +24,12 @@ export class PatientEditComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
       idPatient: new FormControl(0),
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
-      dni: new FormControl(''),
+      firstName: new FormControl('',[Validators.required, Validators.minLength(150)]),
+      lastName: new FormControl('',[Validators.required , Validators.minLength(70)]),
+      dni: new FormControl('',[Validators.required , Validators.minLength(8)]),
       address: new FormControl(''),
-      phone: new FormControl(''),
-      email: new FormControl('')
+      phone: new FormControl('',[Validators.required , Validators.minLength(10)]),
+      email: new FormControl('',[Validators.required , Validators.email])
     });
     this.activedRoute.params.subscribe(data=>{
       this.id = data['id'];
@@ -44,12 +44,12 @@ export class PatientEditComponent implements OnInit {
       this.service.findById(this.id).subscribe(data=>{
         this.form = new FormGroup({
           idPatient: new FormControl(data.idPatient),
-          firstName: new FormControl(data.firstName),
-          lastName: new FormControl(data.lastName),
-          dni: new FormControl(data.dni),
+          firstName: new FormControl(data.firstName,[Validators.required , Validators.minLength(150)]),
+          lastName: new FormControl(data.lastName,[Validators.required , Validators.minLength(70)]),
+          dni: new FormControl(data.dni,[Validators.required , Validators.minLength(8)]),
           address: new FormControl(data.address),
-          phone: new FormControl(data.phone),
-          email: new FormControl(data.email)
+          phone: new FormControl(data.phone,[Validators.required , Validators.minLength(10)]),
+          email: new FormControl(data.email,[Validators.required , Validators.email])
         });
 
       });
@@ -90,6 +90,9 @@ export class PatientEditComponent implements OnInit {
     }
 
     this.router.navigate(['/pages/patient']);
-
+  }
+  get f(){
+    console.log(this.form.controls)
+    return this.form.controls;
   }
 }
