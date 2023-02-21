@@ -1,1 +1,27 @@
-<p>specialty-edit works!</p>
+<form class="example-container" [formGroup]="form" (submit)="operate()">
+
+  <div [hidden]="true">
+      <mat-form-field class="example-full-width">
+          <input matInput placeholder="ID" required formControlName="idSpecialty">
+      </mat-form-field>
+  </div>
+
+  <mat-form-field class="example-full-width">
+      <input matInput placeholder="NameSpecialty" minlength="3" formControlName="nameSpecialty">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+      <input matInput placeholder="DescriptionSpecialty" minlength="3" required formControlName="descriptionSpecialty">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">
+      <mat-icon>done</mat-icon>
+      <span>Done</span>
+  </button>
+
+  <button mat-raised-button color="accent" type="button" routerLink="/pages/specialty">
+      <mat-icon>cancel</mat-icon>
+      <span>Cancel</span>
+  </button>
+
+</form>
