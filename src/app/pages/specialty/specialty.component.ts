@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { SpecialtyService } from 'src/app/service/specialty.service';
 import { Specialty } from '../../Model/specialty';
@@ -18,7 +19,8 @@ export class SpecialtyComponent implements OnInit{
 
   constructor(
     private specialtyService: SpecialtyService,
-    private _SnackBar: MatSnackBar
+    private _SnackBar: MatSnackBar,
+    private activatedRoute: ActivatedRoute
     ){}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -64,6 +66,9 @@ export class SpecialtyComponent implements OnInit{
       this.specialtyService.setSpecialtyChange(data);
       this.specialtyService.setMessageChange("DELETED!");
     })
+  }
+  checkChildren():boolean{
+    return this.activatedRoute.children.length != 0;
   }
 
 }
