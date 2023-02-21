@@ -14,6 +14,8 @@ import { MedicDialogComponent } from './pages/medic/medic-dialog/medic-dialog.co
 import { DialogConfirmationComponent } from './pages/medic/medic-dialog/dialog-confirmation/dialog-confirmation.component';
 import { ExamComponent } from './pages/exam/exam.component';
 import { SpecialtyComponent } from './pages/specialty/specialty.component';
+import { SpecialtyEditComponent } from './pages/specialty/specialty-edit/specialty-edit.component';
+import { ExamEditComponent } from './pages/exam/exam-edit/exam-edit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +25,9 @@ import { SpecialtyComponent } from './pages/specialty/specialty.component';
     MedicDialogComponent,
     DialogConfirmationComponent,
     ExamComponent,
-    SpecialtyComponent
+    SpecialtyComponent,
+    SpecialtyEditComponent,
+    ExamEditComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,27 @@
+<form class="example-container" [formGroup]="form" (submit)="operate()">
+
+  <div [hidden]="true">
+      <mat-form-field class="example-full-width">
+          <input matInput placeholder="ID" required formControlName="idExam">
+      </mat-form-field>
+  </div>
+
+  <mat-form-field class="example-full-width">
+      <input matInput placeholder="NameExam" minlength="3" formControlName="nameExam">
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+      <input matInput placeholder="descriptionExam" minlength="3" required formControlName="descriptionExam">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">
+      <mat-icon>done</mat-icon>
+      <span>Done</span>
+  </button>
+
+  <button mat-raised-button color="accent" type="button" routerLink="/pages/exam">
+      <mat-icon>cancel</mat-icon>
+      <span>Cancel</span>
+  </button>
+
+</form>

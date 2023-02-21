@@ -18,7 +18,7 @@ export class ExamService extends GenericService<Exam> {
   }
   ////////////implement these change ////////////////////
 
-  public getexamChange() {
+  public getExamChange() {
     return this.examChange.asObservable();
   }
 

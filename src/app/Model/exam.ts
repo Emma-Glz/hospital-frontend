@@ -1,5 +1,5 @@
 export class Exam{
   idExam: number;
-  nameExame: string;
+  nameExam: string;
   descriptionExam: string;
 }
