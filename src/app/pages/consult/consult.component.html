@@ -4,7 +4,7 @@
 <div class="example-container">
   <mat-form-field>
     <mat-select placeholder="Select Patient" [(ngModel)]="idPatientSeleted">
-      <mat-option *ngFor="let p of patients" [value]="p.idPatient">
+      <mat-option *ngFor="let p of patients$ | async" [value]="p.idPatient">
         {{p.firstName}} {{p.lastName}}
       </mat-option>
     </mat-select>
