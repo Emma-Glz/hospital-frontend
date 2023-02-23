@@ -10,6 +10,7 @@ import { Specialty } from '../../Model/specialty';
 import { Exam } from 'src/app/Model/exam';
 import { ConsultDetail } from 'src/app/Model/consultDetail';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { Consult } from 'src/app/Model/consult';
 
 @Component({
   selector: 'app-consult',
@@ -77,7 +78,26 @@ export class ConsultComponent implements OnInit {
     }else{
       this._snackBar.open("Please select an exam", 'INFO',{duration:2000});
     }
+  }
+  save(){
+    const p = new Patient();
+    p.idPatient = this.idPatientSeleted;
+    const m = new Medic();
+    m.idMedic = this.idMedicSeleted;
+    const s = new Specialty();
+    s.idSpecialty = this.idSpecialtySeleted;
 
+    const consult = new Consult();
+    consult.patient = p;
+    consult.medic = m;
+    consult.specialty = s;
+    consult.numConsult = "C1";
+
+    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    let localISOTIme = (new Date(this.dateSeleted.getTime()-tzoffset)).toISOString();
+
+    consult.consultDate = localISOTIme;
+    console.log(consult)
   }
 
 }

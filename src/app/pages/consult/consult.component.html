@@ -71,7 +71,7 @@
     </mat-select>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" (click)="addExams()">Add Exam</button>
+  <button mat-raised-button color="accent" (click)="addExams()">Add Exam</button>
 
   <mat-list>
     <mat-list-item role="listitem" *ngFor="let ex of examsSelected; let i = index">
@@ -79,4 +79,5 @@
     </mat-list-item>
   </mat-list>
 
+  <button mat-raised-button color="primary" (click)="save()">Save</button>
 </div>
