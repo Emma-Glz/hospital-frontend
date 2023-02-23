@@ -5,6 +5,9 @@ import { SpecialtyService } from '../../service/specialty.service';
 import { Patient } from 'src/app/Model/patient';
 import { Observable } from 'rxjs';
 import { ExamService } from '../../service/exam.service';
+import { Medic } from 'src/app/Model/medic';
+import { Specialty } from '../../Model/specialty';
+import { Exam } from 'src/app/Model/exam';
 
 @Component({
   selector: 'app-consult',
@@ -13,8 +16,16 @@ import { ExamService } from '../../service/exam.service';
 })
 export class ConsultComponent implements OnInit {
   idPatientSeleted: number;
-  patients$: Observable<Patient[]>;
+  idMedicSeleted: number;
+  idSpecialtySeleted: number;
 
+
+  patients$: Observable<Patient[]>;
+  medics$: Observable<Medic[]>;
+  specialties$: Observable<Specialty[]>;
+  exams$: Observable<Exam[]>;
+
+  minDate: Date = new Date();
   constructor(
     private patientService: PatientService,
     private medicService: MedicService,
@@ -22,9 +33,21 @@ export class ConsultComponent implements OnInit {
     private examSpecialty: ExamService
   ) { }
   ngOnInit(): void {
-    this.patients$ = this.patientService.findAll();
+    this.initData();
   }
 
+  initData() {
+    this.patients$ = this.patientService.findAll();
+    this.medics$ = this.medicService.findAll();
+    this.specialties$ = this.specialtyService.findAll();
+    this.exams$ = this.examSpecialty.findAll();
+  }
+  OnDateChange(e: any) {
+    console.log(e)
+  }
+  onDateInput(e: any) {
+    console.log(e)
+  }
 
 
 
