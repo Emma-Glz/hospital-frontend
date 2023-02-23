@@ -28,7 +28,8 @@
 
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Choose a date</mat-label>
-    <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="OnDateChange($event)">
+    <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="OnDateChange($event)"
+      [(ngModel)]="dateSeleted">
     <mat-hint>DD/MM/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker">
       <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
@@ -36,6 +37,46 @@
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
+  <mat-form-field>
+    <input matInput placeholder="Diagnosis" [(ngModel)]="diagnosis">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Treatment" [(ngModel)]="treatment">
+  </mat-form-field>
 
+  <button mat-raised-button color="accent" (click)="addDetail()">Add Detail</button>
+
+  <mat-expansion-panel *ngFor="let det of details; let i=index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+       {{i + 1}} {{det.diagnosis}}
+      </mat-panel-title>
+      <mat-panel-description>
+        View Treatment
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <textarea matInput placeholder="Treatment" value="{{det.treatment}}"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="warn" (click)="removeDetail(i)">Remove</button>
+  </mat-expansion-panel>
+
+  <mat-form-field>
+    <mat-select placeholder="Select Exam" [(ngModel)]="idExamSeleted">
+      <mat-option *ngFor="let e of exams$ | async" [value]="e.idExam">
+        {{e.nameExam}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="addExams()">Add Exam</button>
+
+  <mat-list>
+    <mat-list-item role="listitem" *ngFor="let ex of examsSelected; let i = index">
+      {{i + 1}} {{ex.nameExam}}
+    </mat-list-item>
+  </mat-list>
 
 </div>

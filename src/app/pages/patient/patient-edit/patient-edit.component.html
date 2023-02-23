@@ -8,7 +8,7 @@
 
   <mat-form-field class="example-full-width">
       <input matInput placeholder="FirstName" minlength="3" formControlName="firstName">
-      <small *ngIf="f['firstName'].errors?.['required'] && (f['firstName'].dirty) || f['firstName'].touched " class="invalid">Is required</small>
+      <small *ngIf="f['firstName'].errors?.['required']  && f['firstName'].touched" class="invalid">Is required</small>
       <small *ngIf="f['firstName'].errors?.['minlength'] && f['firstName'].touched" class="invalid">MinLength is 3</small>
     </mat-form-field>
 
