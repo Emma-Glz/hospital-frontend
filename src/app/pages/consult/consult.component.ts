@@ -11,6 +11,9 @@ import { Exam } from 'src/app/Model/exam';
 import { ConsultDetail } from 'src/app/Model/consultDetail';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Consult } from 'src/app/Model/consult';
+import * as moment from 'moment';
+import { ConsultListExamDTOI } from '../../dto/consultListExamDTOI';
+import { ConsultService } from '../../service/consult.service';
 
 @Component({
   selector: 'app-consult',
@@ -42,6 +45,7 @@ export class ConsultComponent implements OnInit {
     private medicService: MedicService,
     private specialtyService: SpecialtyService,
     private examService: ExamService,
+    private consultService: ConsultService,
     private _snackBar: MatSnackBar
   ) { }
   ngOnInit(): void {
@@ -68,18 +72,18 @@ export class ConsultComponent implements OnInit {
     this.details.push(det);
   }
 
-  removeDetail( index: number){
-    this.details.splice(index,1);
+  removeDetail(index: number) {
+    this.details.splice(index, 1);
   }
-  addExams(){
-    if(this.idExamSeleted > 0){
+  addExams() {
+    if (this.idExamSeleted > 0) {
       this.examService.findById(this.idExamSeleted).subscribe(data => this.examsSelected.push(data))
 
-    }else{
-      this._snackBar.open("Please select an exam", 'INFO',{duration:2000});
+    } else {
+      this._snackBar.open("Please select an exam", 'INFO', { duration: 2000 });
     }
   }
-  save(){
+  save() {
     const p = new Patient();
     p.idPatient = this.idPatientSeleted;
     const m = new Medic();
@@ -92,12 +96,42 @@ export class ConsultComponent implements OnInit {
     consult.medic = m;
     consult.specialty = s;
     consult.numConsult = "C1";
+    consult.details= this.details;
 
-    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-    let localISOTIme = (new Date(this.dateSeleted.getTime()-tzoffset)).toISOString();
+    console.log(consult);
 
-    consult.consultDate = localISOTIme;
-    console.log(consult)
+    /*let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    let localISOTIme = (new Date(this.dateSeleted.getTime()-tzoffset)).toISOString();*/
+
+    consult.consultDate = moment(this.dateSeleted).format('YYYY-MM-DDTHH:mm:ss');
+
+
+    const dto: ConsultListExamDTOI = {
+      consult: consult,
+      lstExam: this.examsSelected
+    }
+
+    this.consultService.saveTransational(dto).subscribe(() => {
+      this._snackBar.open("CREATED!", "INFO", { duration: 2000 });
+
+      setTimeout(() => {
+        this.cleanControls();
+      }, 2000)
+
+    });
+
+
   }
+  cleanControls() {
+    this.idPatientSeleted = 0;
+    this.idExamSeleted = 0;
+    this.idMedicSeleted = 0;
+    this.idSpecialtySeleted = 0;
+    this.diagnosis = null;
+    this.treatment = null;
+    this.dateSeleted = new Date();
+    this.details = [];
+    this.examsSelected = [];
 
+  }
 }
