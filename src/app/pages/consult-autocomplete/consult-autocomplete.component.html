@@ -1,1 +1,13 @@
-<p>consult-autocomple worksssss!</p>
+<mat-toolbar>
+  <span>Consult Register 2 - AutoComplete</span>
+</mat-toolbar>
+<form class="example-container" [formGroup]="form" (submit)="save()">
+    <mat-form-field>
+      <input matInput placeholder="Patient" [matAutocomplete]="autoPatient" [formControl]="PatientControl" formControlName="patient">
+      <mat-autocomplete #autoPatient="matAutocomplete" [displayWith]="showPatient" >
+        <mat-option *ngFor="let p of patientsFiltered$ | async " [value]="p">
+          {{p.firstName}} {{p.lastName}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+</form>
