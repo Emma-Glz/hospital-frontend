@@ -12,10 +12,92 @@
         </mat-select>
       </mat-form-field>
 
+      <mat-form-field>
+        <mat-select placeholder="Select Exam" formControlName="exam">
+          <mat-option *ngFor="let e of exams" [value]="e">
+            {{e.nameExam}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" [min]="minDate" formControlName="consultDate">
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Diagnosis" formControlName="diagnosis">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Treatment" formControlName="treatment">
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" (click)="addDetails()">Add Detail</button>
+
+      <mat-expansion-panel *ngFor="let det of details; let i=index">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+           {{i + 1}} {{det.diagnosis}}
+          </mat-panel-title>
+          <mat-panel-description>
+            View Treatment
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field>
+          <textarea matInput placeholder="Treatment" value="{{det.treatment}}"></textarea>
+        </mat-form-field>
+
+        <button mat-raised-button color="warn" (click)="removeDetail(i)">Remove</button>
+      </mat-expansion-panel>
+
+      <mat-form-field>
+        <mat-select placeholder="Select Exam" formControlName="exam">
+          <mat-option *ngFor="let e of exams" [value]="e">
+            {{e.nameExam}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" type="button" (click)="addExam()">Add Exams</button>
+      <mat-list role="list">
+        <mat-list-item role="listitem" *ngFor="let exam of examsSelected; let i = index">
+          {{i +1}} {{exam.nameExam}}
+        </mat-list-item>
+      </mat-list>
+
+      <div fxLayout="row" fxLayoutAlign="space-around" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" >
+        <mat-card *ngFor="let m of medics">
+          <mat-card-header>
+              <img mat-card-avatar [src]="m.photo" alt="photo of Medic">
+
+            <mat-card-title [ngClass]="medicSelected == m ? 'medicCSS' : ''">
+              {{m.primaryName}} {{m.surName}}
+            </mat-card-title>
+            <mat-card-subtitle>{{m.cmp}}</mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image alt="Medic image" [src]="m.photo" style="cursor: pointer" >
+
+          <mat-card-content>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At quidem consequuntur porro corporis odio dicta accusamus placeat non quam ex?</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button type="button" color="accent" (click)="selectMedic(m)">Select</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <button mat-raised-button matStepperNext type="button" color="primary" style="float: right">Next</button>
 
 
     </form>
 
+    <form [formGroup]="secondFormGroup">
+
+    </form>
   </mat-step>
   <mat-step>
 

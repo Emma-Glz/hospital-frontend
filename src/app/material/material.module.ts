@@ -21,6 +21,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatCardModule} from '@angular/material/card';
 
 
 
@@ -49,7 +50,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatExpansionModule,
     MatListModule,
     MatAutocompleteModule,
-    MatStepperModule
+    MatStepperModule,
+    MatCardModule
 
   ],
   providers:[

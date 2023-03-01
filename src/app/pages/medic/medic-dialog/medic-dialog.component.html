@@ -1,6 +1,6 @@
 <mat-dialog-content>
   <mat-toolbar>
-    <span >Medic data</span>
+    <span>Medic data</span>
   </mat-toolbar>
   <div>
     <mat-form-field>
@@ -15,10 +15,10 @@
     <mat-form-field>
       <input matInput placeholder="photo" [(ngModel)]="medic.photo">
     </mat-form-field>
-   <!-- <img mat-car-image [src]="medic.photo" width="50%" height="50%" *ngIf="medic.photo" >-->
+    <img mat-car-image [src]="medic.photo" width="80%" height="80%" *ngIf="medic.photo">
 
-    <button mat-raised-button color="primary" (click)="sendData()">Done</button>
-    <button mat-raised-button color="warn" (click)="close()">Close</button>
+      <button mat-raised-button color="primary" (click)="sendData()">Done</button>
+      <button mat-raised-button color="warn" (click)="close()">Close</button>
 
   </div>
 </mat-dialog-content>

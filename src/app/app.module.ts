@@ -19,6 +19,7 @@ import { ExamEditComponent } from './pages/exam/exam-edit/exam-edit.component';
 import { ConsultComponent } from './pages/consult/consult.component';
 import { ConsultAutocompleComponent } from './pages/consult-autocomplete/consult-autocomplete.component';
 import { ConsultWizardComponent } from './pages/consult-wizard/consult-wizard.component';
+import { FlexLayoutModule } from 'ngx-flexible-layout';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +43,8 @@ import { ConsultWizardComponent } from './pages/consult-wizard/consult-wizard.co
     HttpClientModule,//permite el consumo de http de todo el proyecto
     MaterialModule,
     ReactiveFormsModule,//activar para el form de patient-edit
-    FormsModule
+    FormsModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

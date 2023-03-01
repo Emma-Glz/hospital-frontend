@@ -21,41 +21,74 @@ export class ConsultWizardComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
 
+  minDate: Date = new Date();
+
   patients: Patient[];
   medics: Medic[];
   specialties: Specialty[];
   exams: Exam[];
-  details: ConsultDetail[];
+  details: ConsultDetail[] = [];
+  examsSelected: Exam[] = [];
+  specialtiesSelected: Specialty[] = [];
 
+
+  medicSelected: Medic;
   constructor(
     private patientService: PatientService,
     private medicService: MedicService,
     private specialtyService: SpecialtyService,
     private examService: ExamService,
     private consultService: ConsultService,
-    private _skackBar: MatSnackBar,
+    private _snackBar: MatSnackBar,
     private _formBuilder: FormBuilder
-  ){
+  ) {
 
   }
 
   ngOnInit(): void {
     this.firstFormGroup = this._formBuilder.group({
-        'patient': [new FormControl(),Validators.required],
-        'specialty': [new FormControl(),Validators.required],
-        'exam': [new FormControl(),Validators.required],
-        'consultDate': [new FormControl(new Date()),Validators.required],
-        'diagnosis': [new FormControl(),Validators.required],
-        'treatment': [new FormControl(),Validators.required]
+      'patient': [new FormControl(), Validators.required],
+      'specialty': [new FormControl(), Validators.required],
+      'exam': [new FormControl(''), Validators.required],
+      'consultDate': [new FormControl(new Date()), Validators.required],
+      'diagnosis': new FormControl('', [Validators.required]),
+      'treatment': new FormControl('', [Validators.required])
     });
 
+    this.secondFormGroup = this._formBuilder.group({
+
+    });
     this.loadInitialData();
 
   }
-  loadInitialData(){
+  loadInitialData() {
     this.patientService.findAll().subscribe(data => this.patients = data);
     this.medicService.findAll().subscribe(data => this.medics = data);
     this.specialtyService.findAll().subscribe(data => this.specialties = data);
     this.examService.findAll().subscribe(data => this.exams = data);
   }
+
+  addDetails() {
+    let det = new ConsultDetail();
+    det.diagnosis = this.firstFormGroup.value['diagnosis'];
+    det.treatment = this.firstFormGroup.value['treatment'];
+
+    this.details.push(det);
+  }
+
+  removeDetail(index: number) {
+    this.details.splice(index, 1);
+  }
+
+  addExam() {
+    if (this.firstFormGroup.value['exam'] != null) {
+      this.examsSelected.push(this.firstFormGroup.value['exam']);
+    } else {
+      this._snackBar.open('Please select an exam', 'INFO', { duration: 2000 });
+    }
+  }
+  selectMedic(medic : Medic){
+    this.medicSelected = medic;
+  }
+
 }
