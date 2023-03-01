@@ -9,6 +9,7 @@ import { SpecialtyComponent } from './pages/specialty/specialty.component';
 import { SpecialtyEditComponent } from './pages/specialty/specialty-edit/specialty-edit.component';
 import { ConsultComponent } from './pages/consult/consult.component';
 import { ConsultAutocompleComponent } from './pages/consult-autocomplete/consult-autocomplete.component';
+import { ConsultWizardComponent } from './pages/consult-wizard/consult-wizard.component';
 
 const routes: Routes = [
   {
@@ -40,7 +41,11 @@ const routes: Routes = [
   },
   {
     path:'pages/consult-autocomplete', component: ConsultAutocompleComponent
+  },
+  {
+    path:'pages/consult-wizard', component: ConsultWizardComponent
   }
+
 ];
 
 @NgModule({
