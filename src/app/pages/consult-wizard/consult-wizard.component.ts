@@ -14,6 +14,8 @@ import { MedicService } from 'src/app/service/medic.service';
 import { Consult } from 'src/app/Model/consult';
 import { MatStepper } from '@angular/material/stepper';
 
+import * as moment from 'moment';
+import { ConsultListExamDTO } from 'src/app/dto/consultListExamDTO';
 @Component({
   selector: 'app-consult-wizard',
   templateUrl: './consult-wizard.component.html',
@@ -112,10 +114,41 @@ export class ConsultWizardComponent implements OnInit {
       this._snackBar.open('Please select a consult', 'INFO', { duration: 2000 });
     }
   }
-
   get f() {
     console.log(this.firstFormGroup.controls);
     return this.firstFormGroup.controls;
+  }
+  save(){
+    const consult = new Consult();
+    consult.patient = this.firstFormGroup.value['patient'];
+    consult.medic = this.medicSelected;
+    consult.specialty = this.firstFormGroup.value['specialty'];
+    consult.numConsult = `C${this.consultSelected}`;
+    consult.consultDate = moment(this.firstFormGroup.value['consultDate']).format('YYYY-MM-DDTHH:mm:ss');
+    consult.details = this.details;
+
+    const dto = new ConsultListExamDTO();
+    dto.consult = consult;
+    dto.lstExam = this.examsSelected;
+
+    this.consultService.saveTransational(dto).subscribe(() => {
+      this._snackBar.open("CREATED", "INFO", { duration: 2000 });
+
+      setTimeout(() => {
+        this.cleanControls();
+      }, 2000)
+    }
+    )
+  }
+  cleanControls(){
+    this.firstFormGroup.reset();
+    this.secondFormGroup.reset();
+    this.stepper.reset();
+    this.details = [];
+    this.examsSelected = [];
+    this.consultSelected = 0;
+    this.medicSelected = null;
+
   }
 
 }

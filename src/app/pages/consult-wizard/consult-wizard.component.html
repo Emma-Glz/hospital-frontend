@@ -13,9 +13,9 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-select placeholder="Select Exam" formControlName="exam">
-          <mat-option *ngFor="let e of exams" [value]="e">
-            {{e.nameExam}}
+        <mat-select placeholder="Select Specialty" formControlName="specialty">
+          <mat-option *ngFor="let s of specialties" [value]="s">
+            {{s.nameSpecialty}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -26,14 +26,6 @@
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-select placeholder="Select Specialty" formControlName="specialty">
-          <mat-option *ngFor="let s of specialties" [value]="s">
-            {{s.nameSpecialty}}
-          </mat-option>
-        </mat-select>
       </mat-form-field>
 
       <mat-form-field>
@@ -127,5 +119,7 @@
     <h3 *ngIf="medicSelected">Medic: {{medicSelected?.primaryName + ' ' + medicSelected?.surName}} </h3>
     <h3>Consult Number: {{'C' + consultSelected }} </h3>
 
+    <button mat-raised-button matStepperPrevious type="button" color="primary">Previous</button>
+    <button mat-raised-button (click)="save()" color="accent">Save</button>
   </mat-step>
 </mat-horizontal-stepper>
