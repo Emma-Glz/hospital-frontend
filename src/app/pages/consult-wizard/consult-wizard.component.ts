@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Patient } from '../../Model/patient';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Medic } from 'src/app/Model/medic';
@@ -11,6 +11,8 @@ import { ExamService } from 'src/app/service/exam.service';
 import { ConsultService } from 'src/app/service/consult.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MedicService } from 'src/app/service/medic.service';
+import { Consult } from 'src/app/Model/consult';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-consult-wizard',
@@ -31,8 +33,12 @@ export class ConsultWizardComponent implements OnInit {
   examsSelected: Exam[] = [];
   specialtiesSelected: Specialty[] = [];
 
+  consults: number[] = [];
+  consultSelected: number;
 
   medicSelected: Medic;
+
+  @ViewChild('stepper') stepper: MatStepper;
   constructor(
     private patientService: PatientService,
     private medicService: MedicService,
@@ -66,6 +72,11 @@ export class ConsultWizardComponent implements OnInit {
     this.medicService.findAll().subscribe(data => this.medics = data);
     this.specialtyService.findAll().subscribe(data => this.specialties = data);
     this.examService.findAll().subscribe(data => this.exams = data);
+
+    for (let consult = 1; consult <= 100; consult++) {
+      this.consults.push(consult);
+
+    }
   }
 
   addDetails() {
@@ -87,8 +98,24 @@ export class ConsultWizardComponent implements OnInit {
       this._snackBar.open('Please select an exam', 'INFO', { duration: 2000 });
     }
   }
-  selectMedic(medic : Medic){
+  selectMedic(medic: Medic) {
     this.medicSelected = medic;
+  }
+  selectConsult(consult: number) {
+    this.consultSelected = consult;
+  }
+
+  nextManualStep() {
+    if (this.consultSelected > 0) {
+      this.stepper.next();
+    } else {
+      this._snackBar.open('Please select a consult', 'INFO', { duration: 2000 });
+    }
+  }
+
+  get f() {
+    console.log(this.firstFormGroup.controls);
+    return this.firstFormGroup.controls;
   }
 
 }
